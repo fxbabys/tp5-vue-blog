@@ -19,8 +19,8 @@ class Index extends Base {
 
     public function user() {
         $users = model("user")->paginate(5);
-        $this->assign("users", $users);
-        return view();
+        // $this->assign("users", $users);
+        return json($users);
     }
 
     public function addUser() {
@@ -37,13 +37,17 @@ class Index extends Base {
         if(!empty($id)) {
             $article = model("index/articles")->getOne($id);
             $category = model("index/category")->getOne($article["c_id"]);
-            $this->assign("article", $article);
-            $this->assign("category", $category);
+            // $this->assign("article", $article);
+            // $this->assign("category", $category);
+            $data = $article;
         } else {
             $category = model("index/category")->getAll();
-            $this->assign("category", $category);
+            // $this->assign("category", $category);
+            $data = [
+                'category' => $category
+            ];
         }
-        return $this->fetch("addAtc");
+        return json($data);
     }
 
     public function insertAtc() {
@@ -97,7 +101,19 @@ class Index extends Base {
         $id = input("id");
         $user = new \app\index\model\Articles;
         $res = $user::destroy($id);
-        $this->redirect("index/admin");
+        // $this->redirect("index/admin");
+        if ($res) {
+            $data = [
+                'status' => 200,
+                'info' => '删除成功'
+            ];
+        } else {
+            $data = [
+                'status' => 400,
+                'info' => '删除失败'
+            ];
+        }
+        return json($data);
     }
 
     public function userVali() {

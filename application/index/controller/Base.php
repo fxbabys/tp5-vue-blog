@@ -19,6 +19,7 @@ class Base extends Controller {
           session('user_name', cookie("user_name"));
           $this->redirect('Index/index');
         }
+        return $res;
     }
 }
 

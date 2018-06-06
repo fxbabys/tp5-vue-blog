@@ -18,18 +18,31 @@ class Index extends Base
         return view();
     }
 
+    public function getUserSession() {
+        return session('user_name');
+    }
+
+    public function getStatusSession() {
+        return session('u_status');
+    }
+
+    public function getNav() {
+        return json(Parent::category());
+    }
+
     public function article() {
         $id = input('id');
         $articles = model("articles")->getAtc($id);
-        $this->assign("articles", $articles);
-        return view();
+        // $this->assign("articles", $articles);
+        // return view();
+        return json($articles);
     }
 
     public function detail() {
         $id = input('id');
         $detail = model("articles")->getOne($id);
         $this->assign("detail", $detail);
-        return view();
+        return json($detail);
     }
 
     public function login() {
@@ -47,19 +60,19 @@ class Index extends Base
         $data["pass"] = $data["pass"];
         $res = $validate->scene($scene)->check($data);
         if(!$res) {  // 表单验证
-            return $data = [
+            return $data = json([
                 'status' => 400,
                 'info'   => $validate->getError(),
                 'scene'  => $data
-            ];
+            ]);
         }
         $user = model("admin/user")->getName($data["user"]);
         if($scene === "sign") {  // 注册
             if($user) {
-                return $data = [
+                return $data = json([
                     'status' => 400,
                     'info'   => "User Name repetition"
-                ];
+                ]);
             }
             $res = model("admin/user")->allowField(true)->save($data);
             $info = "Sign Success";
@@ -69,15 +82,15 @@ class Index extends Base
             cookie("u_id", $res);
         } else {
             if(!$user) {
-                return $data = [
+                return $data = json([
                     'status' => 400,
                     'info'   => "User Name doesn not exist"
-                ];
+                ]);
             } else if($data["pass"] !== $user["pass"]) {
-                return $data = [
+                return $data = json([
                     'status' => 400,
                     'info'   => "Password error"
-                ];
+                ]);
             } else {
                 $info = "Login Success";
                 session('user_name', $data["name"]);
@@ -90,10 +103,10 @@ class Index extends Base
                 }
             }
         }
-        $data = [
+        $data = json([
             'status' => 200,
             'info'   => $info
-        ];
+        ]);
         return $data;
     }
 
@@ -115,6 +128,6 @@ class Index extends Base
                 'info'   => "Logout failure"
             ];
         }
-        return $data;
+        return json($data);
     }
 }
