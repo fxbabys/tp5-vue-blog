@@ -44,126 +44,126 @@
             </nav>
             <!-- content -->
             <template v-if="IndexPage == 1">
-                            <div class="content">
-                                <h1>The best time to plant a tree is ten years ago, followed by now.</h1>
-                                <div class="btn-container">
-                                    <button class="btn light-btn" @click="getArts">View all articles</button>
-                                    <template v-if="!userSession">
-                                        <sign-button @clicked="goSign"></sign-button>
-                                    </template>
-                                    <template v-else></template>
-                                </div>
-                            </div>
+                <div class="content">
+                    <h1>The best time to plant a tree is ten years ago, followed by now.</h1>
+                    <div class="btn-container">
+                        <button class="btn light-btn" @click="getArts">View all articles</button>
+                        <template v-if="!userSession">
+                            <sign-button @clicked="goSign"></sign-button>
+                        </template>
+                        <template v-else></template>
+                    </div>
+                </div>
             </template>
             <template v-else-if="IndexPage == 2">
-                            <div class="content">
-                                <h1 v-if="artLists.length">{{artLists[0]['cinfo']}}</h1>
-                                <h1 v-else>The best time to plant a tree is ten years ago, followed by now.</h1>
-                                <div class="btn-container">
-                                    <template v-if="!userSession">
-                                        <sign-button @clicked="goSign"></sign-button>
-                                    </template>
-                                    <template v-else></template>
-                                </div>
+                <div class="content">
+                    <h1 v-if="artLists.length">{{artLists[0]['cinfo']}}</h1>
+                    <h1 v-else>The best time to plant a tree is ten years ago, followed by now.</h1>
+                    <div class="btn-container">
+                        <template v-if="!userSession">
+                            <sign-button @clicked="goSign"></sign-button>
+                        </template>
+                        <template v-else></template>
+                    </div>
+                </div>
+                <div class="article">
+                    <div class="artc-container">
+                        <h1 v-if="artLists.length">{{artLists[0]['cname']}}</h1>
+                        <h1 v-else>No articles</h1>
+                        <div class="artc-boxes">
+                            <h3 v-if="!artLists.length">You can visit other categorys!</h3>
+                            <div v-else class="artc-box" v-for="(artList, index) in artLists" :key="index">
+                            <div class="artc-title">{{artList.title}}</div>
+                                <ul class="artc-list">
+                                    <li>Author: {{artList.uname}}</li>
+                                    <svg style="margin:0 8px;" height="5" width="5" fill="#8a8a8a" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 84 84" data-reactid="246"><circle class="circle-obj" cx="42" cy="42" r="40" stroke="#8a8a8a" stroke-width="4" fill="#8a8a8a"></circle></svg>
+                                    <li>Created: {{artList.create_time}}</li>
+                                    <svg style="margin:0 8px;" height="5" width="5" fill="#8a8a8a" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 84 84" data-reactid="246"><circle class="circle-obj" cx="42" cy="42" r="40" stroke="#8a8a8a" stroke-width="4" fill="#8a8a8a"></circle></svg>
+                                    <li>Update: {{artList.update_time}}</li>
+                                </ul>
+                                <div class="artc-des">{{artList.content}}……</div>
+                                <button @click="getDetail(artList.id)">Lean More</button>
                             </div>
-                            <div class="article">
-                                <div class="artc-container">
-                                    <h1 v-if="artLists.length">{{artLists[0]['cname']}}</h1>
-                                    <h1 v-else>No articles</h1>
-                                    <div class="artc-boxes">
-                                            <h3 v-if="!artLists.length">You can visit other categorys!</h3>
-                                            <div v-else class="artc-box" v-for="(artList, index) in artLists" :key="index">
-                                                <div class="artc-title">{{artList.title}}</div>
-                                                <ul class="artc-list">
-                                                    <li>Author: {{artList.uname}}</li>
-                                                        <svg style="margin:0 8px;" height="5" width="5" fill="#8a8a8a" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 84 84" data-reactid="246"><circle class="circle-obj" cx="42" cy="42" r="40" stroke="#8a8a8a" stroke-width="4" fill="#8a8a8a"></circle></svg>
-                                                    <li>Created: {{artList.create_time}}</li>
-                                                        <svg style="margin:0 8px;" height="5" width="5" fill="#8a8a8a" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 84 84" data-reactid="246"><circle class="circle-obj" cx="42" cy="42" r="40" stroke="#8a8a8a" stroke-width="4" fill="#8a8a8a"></circle></svg>
-                                                    <li>Update: {{artList.update_time}}</li>
-                                                </ul>
-                                                <div class="artc-des">{{artList.content}}……</div>
-                                                <button @click="getDetail(artList.id)">Lean More</button>
-                                            </div>
-                                    </div>
-                                 </div>
-                            </div>
+                        </div>
+                    </div>
+                </div>
             </template>
             <template v-else-if="IndexPage == 3">
-                            <div class="content con-detail">
-                                <div class="detail-container">
-                                    <div class="con-title">{{artDetail.title}}</div>
-                                    <ul class="con-list">
-                                        <li>Author: {{artDetail.uname}}</li>
-                                        <svg style="margin:0 8px;" height="5" width="5" fill="#8a8a8a" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 84 84" data-reactid="246"><circle class="circle-obj" cx="42" cy="42" r="40" stroke="#8a8a8a" stroke-width="4" fill="#8a8a8a"></circle></svg>
-                                        <li>Created: {{artDetail.create_time}}</li>
-                                        <svg style="margin:0 8px;" height="5" width="5" fill="#8a8a8a" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 84 84" data-reactid="246"><circle class="circle-obj" cx="42" cy="42" r="40" stroke="#8a8a8a" stroke-width="4" fill="#8a8a8a"></circle></svg>
-                                        <li>Update: {{artDetail.update_time}}</li>
-                                    </ul>
-                                    <div class="con-content">{{artDetail.content}}</div>
-                                    <div class="btn-container">
-                                        <template v-if="userSession">
-                                            <sign-button @clicked="changePage"></sign-button>
-                                        </template>
-                                        <template v-else></template>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="content con-detail">
+                    <div class="detail-container">
+                        <div class="con-title">{{artDetail.title}}</div>
+                        <ul class="con-list">
+                            <li>Author: {{artDetail.uname}}</li>
+                            <svg style="margin:0 8px;" height="5" width="5" fill="#8a8a8a" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 84 84" data-reactid="246"><circle class="circle-obj" cx="42" cy="42" r="40" stroke="#8a8a8a" stroke-width="4" fill="#8a8a8a"></circle></svg>
+                            <li>Created: {{artDetail.create_time}}</li>
+                            <svg style="margin:0 8px;" height="5" width="5" fill="#8a8a8a" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 84 84" data-reactid="246"><circle class="circle-obj" cx="42" cy="42" r="40" stroke="#8a8a8a" stroke-width="4" fill="#8a8a8a"></circle></svg>
+                            <li>Update: {{artDetail.update_time}}</li>
+                        </ul>
+                        <div class="con-content">{{artDetail.content}}</div>
+                        <div class="btn-container">
+                        <template v-if="userSession">
+                            <sign-button @clicked="changePage"></sign-button>
+                        </template>
+                        <template v-else></template>
+                        </div>
+                    </div>
+                </div>
             </template>
             <template v-else>
-                            <div class="con-login">
-                                <div class="box-login">
-                                    <template v-if="IndexPage == 4">
-                                        <h1>Log In to JeremyGo.cn</h1>
-                                        <form class="login-form" action="" method="post" @submit.prevent>
-                                            <div class="alert alert-danger" v-show="loginStatus" v-text="loginStatus"></div>
-                                            <div class="user">
-                                                <label>User Name</label>
-                                                <input type="text" name="user" class="userInfo" v-model="UserName">
-                                            </div>
-                                            <div class="pass">
-                                                <label>Password</label>
-                                                <input type="password" name="pass" class="passInfo" v-model="Password">
-                                            </div>
-                                            <button class="login-sub" @click="login('login')">Log In</button>
-                                        </form>
-                                        <div class="box-footer">
-                                            <router-link @click.prevent="goSign">Create an Account</router-link>
-                                        </div>
-                                    </template>
-                                    <template v-else>
-                                        <h1>Sign Up to JeremyGo.cn</h1>
-                                        <form class="login-form" action="" method="post" @submit.prevent>
-                                            <div class="alert alert-danger" v-show="loginStatus" v-text="loginStatus"></div>
-                                            <div class="user">
-                                                <label>User Name</label>
-                                                <input type="text" name="user" class="userInfo" v-model="UserName">
-                                            </div>
-                                            <div class="pass">
-                                                <label>Password</label>
-                                                <input type="password" name="pass" class="passInfo" v-model="Password">
-                                            </div>
-                                            <div class="pass">
-                                                <label>Confirm Password</label>
-                                                <input type="password" name="repass" class="repassInfo" v-model="RePassword">
-                                            </div>
-                                            <button class="login-sub" @click="login('sign')">Sign Up</button>
-                                        </form>
-                                        <div class="box-footer">
-                                            <router-link @click="goLogin">Log In with an Account</router-link>
-                                        </div>
-                                    </template>
+                <div class="con-login">
+                    <div class="box-login">
+                        <template v-if="IndexPage == 4">
+                            <h1>Log In to JeremyGo.cn</h1>
+                            <form class="login-form" action="" method="post" @submit.prevent>
+                                <div class="alert alert-danger" v-show="loginStatus" v-text="loginStatus"></div>
+                                <div class="user">
+                                    <label>User Name</label>
+                                    <input type="text" name="user" class="userInfo" v-model="UserName">
                                 </div>
+                                <div class="pass">
+                                    <label>Password</label>
+                                    <input type="password" name="pass" class="passInfo" v-model="Password">
+                                </div>
+                                <button class="login-sub" @click="login('login')">Log In</button>
+                            </form>
+                            <div class="box-footer">
+                                <router-link @click.prevent="goSign">Create an Account</router-link>
                             </div>
-                            <footer class="footer">
-                                <ul class="domain">@JeremyGo.cn</ul>
-                                <ul class="policy">
-                                    <li>Terms of Use</li>
-                                    <li>Privacy Policy</li>
-                                </ul>
-                                <ul class="atc-link">
-                                    <button class="btn light-btn" @click="getArts">View all articles</button>
-                                </ul>
-                            </footer>
+                        </template>
+                        <template v-else>
+                            <h1>Sign Up to JeremyGo.cn</h1>
+                            <form class="login-form" action="" method="post" @submit.prevent>
+                                <div class="alert alert-danger" v-show="loginStatus" v-text="loginStatus"></div>
+                                <div class="user">
+                                    <label>User Name</label>
+                                    <input type="text" name="user" class="userInfo" v-model="UserName">
+                                </div>
+                                <div class="pass">
+                                    <label>Password</label>
+                                    <input type="password" name="pass" class="passInfo" v-model="Password">
+                                </div>
+                                <div class="pass">
+                                    <label>Confirm Password</label>
+                                    <input type="password" name="repass" class="repassInfo" v-model="RePassword">
+                                </div>
+                                <button class="login-sub" @click="login('sign')">Sign Up</button>
+                            </form>
+                            <div class="box-footer">
+                                <router-link @click="goLogin">Log In with an Account</router-link>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <footer class="footer">
+                    <ul class="domain">@JeremyGo.cn</ul>
+                    <ul class="policy">
+                        <li>Terms of Use</li>
+                        <li>Privacy Policy</li>
+                    </ul>
+                    <ul class="atc-link">
+                        <button class="btn light-btn" @click="getArts">View all articles</button>
+                    </ul>
+                </footer>
             </template>
             <!-- footer -->
         </div>
