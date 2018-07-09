@@ -1,0 +1,28 @@
+.login-form .login-sub {
+    margin-bottom: 3.5rem;
+}
+.login-form a {
+    position: relative;
+    left: 11.25rem/* 180px */;
+    top: 3.125rem/* 50px */;
+    font-size: .9375rem/* 15px */;
+}
+.login-form a:hover {
+    border-bottom: 1px solid #ccc;
+}
+.login-form textarea {
+    border: 0;
+    background-color: #f4f9fb;
+    box-shadow: 0px 1px 1px 0px #E6E9EC;
+    font-weight: 200;
+    height: 10rem;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+}
+.login-form textarea:focus {
+    background-color: #fff8e6;
+    color: #333;
+    box-shadow: 0px 1px 1px 0px #f9c4ad;
+    border: 0;
+    outline: 0;
+}
