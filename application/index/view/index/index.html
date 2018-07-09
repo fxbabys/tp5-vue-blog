@@ -8,42 +8,42 @@
     <link rel="stylesheet" type="text/css" href="__STATIC__/home/css/article.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/home/css/detail.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/home/css/login.css">
-    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/css/admin.css">
+    <!-- <link rel="stylesheet" type="text/css" href="__STATIC__/admin/css/admin.css"> -->
     <link rel="stylesheet" type="text/css" href="__STATIC__/admin/css/user.css">
 </head>
 <body>
 <div id="app">
     <div class="black" v-if="Home">
-                    <div class="background"></div>
-                    <div class="container">
-                        <!-- nav -->
-                        <nav class="nav">
-                            <div class="nav-container">
-                                <div class="logo"><router-link @click="goIndex">Day Break</router-link></div>
+        <div class="background"></div>
+        <div class="container">
+            <!-- nav -->
+            <nav class="nav">
+                <div class="nav-container">
+                    <div class="logo"><router-link @click="goIndex">Day Break</router-link></div>
+                    <ul>
+                        <li v-for="(navList, index) in navLists" :key="index">
+                            <router-link @click="getArts(navList.id)">{{navList.name}}</router-link>
+                            <div class="submenu">
                                 <ul>
-                                    <li v-for="(navList, index) in navLists" :key="index">
-                                        <router-link @click="getArts(navList.id)">{{navList.name}}</router-link>
-                                        <div class="submenu">
-                                            <ul>
-                                                <li v-for="(second, i) in navList.child" :key="i">
-                                                    <router-link @click="getArts(second.id)">{{second.name}}</router-link>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                    <li v-for="(second, i) in navList.child" :key="i">
+                                        <router-link @click="getArts(second.id)">{{second.name}}</router-link>
                                     </li>
-                                    <template v-if="!userSession">
-                                        <li><button @click="goLogin" id="log-btn">Log In</button></li>
-                                    </template>
-                                    <template v-else>
-                                        <li><router-link id="admin-btn" @click="goAdmin">Admin</router-link></li>
-                                        <li><router-link id="logout-btn" @click="logout">Log Out</router-link></li>
-                                    </template>
                                 </ul>
                             </div>
-                            <p class="user_name" v-if="userSession">Welcome：{{ userSession }}</p>
-                        </nav>
-                        <!-- content -->
-                        <template v-if="IndexPage == 1">
+                        </li>
+                        <template v-if="!userSession">
+                            <li><button @click="goLogin" id="log-btn">Log In</button></li>
+                        </template>
+                        <template v-else>
+                            <li><router-link id="admin-btn" @click="goAdmin">Admin</router-link></li>
+                            <li><router-link id="logout-btn" @click="logout">Log Out</router-link></li>
+                        </template>
+                    </ul>
+                </div>
+                <p class="user_name" v-if="userSession">Welcome：{{ userSession }}</p>
+            </nav>
+            <!-- content -->
+            <template v-if="IndexPage == 1">
                             <div class="content">
                                 <h1>The best time to plant a tree is ten years ago, followed by now.</h1>
                                 <div class="btn-container">
@@ -54,8 +54,8 @@
                                     <template v-else></template>
                                 </div>
                             </div>
-                        </template>
-                        <template v-else-if="IndexPage == 2">
+            </template>
+            <template v-else-if="IndexPage == 2">
                             <div class="content">
                                 <h1 v-if="artLists.length">{{artLists[0]['cinfo']}}</h1>
                                 <h1 v-else>The best time to plant a tree is ten years ago, followed by now.</h1>
@@ -87,8 +87,8 @@
                                     </div>
                                  </div>
                             </div>
-                        </template>
-                        <template v-else-if="IndexPage == 3">
+            </template>
+            <template v-else-if="IndexPage == 3">
                             <div class="content con-detail">
                                 <div class="detail-container">
                                     <div class="con-title">{{artDetail.title}}</div>
@@ -108,8 +108,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </template>
-                        <template v-else>
+            </template>
+            <template v-else>
                             <div class="con-login">
                                 <div class="box-login">
                                     <template v-if="IndexPage == 4">
@@ -164,23 +164,23 @@
                                     <button class="btn light-btn" @click="getArts">View all articles</button>
                                 </ul>
                             </footer>
-                        </template>
-                        <!-- footer -->
-                    </div>
+            </template>
+            <!-- footer -->
+        </div>
     </div>
     <div class="container" v-else>
-                <nav class="nav">
-                    <div class="nav-container">
-                        <div class="logo"><a href="{:url("admin/index/admin")}">Day Break</a></div>
-                        <ul>
-                            <li><router-link @click="goIndex">Home</router-link @click="goIndex"></li>
-                            <li><router-link @click="goAdmin">Articles</router-link></li>
-                            <li v-if="statusSession"><router-link @click="goUser">Users</router-link></li>
-                            <li><router-link id="logout-btn" @click="logout">Log Out</router-link></li>
-                        </ul>
-                    </div>
-                </nav>
-                <template v-if="AdminPage == 1">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="logo"><a href="{:url("admin/index/admin")}">Day Break</a></div>
+                <ul>
+                    <li><router-link @click="goIndex">Home</router-link @click="goIndex"></li>
+                    <li><router-link @click="goAdmin">Articles</router-link></li>
+                    <li v-if="statusSession"><router-link @click="goUser">Users</router-link></li>
+                    <li><router-link id="logout-btn" @click="logout">Log Out</router-link></li>
+                </ul>
+            </div>
+        </nav>
+        <template v-if="AdminPage == 1">
                     <div class="con-admin">
                         <div class="box-admin">
                             <div class="table">
@@ -213,8 +213,8 @@
                             <div class="add"><router-link @click="atcEdit()">Add</router-link></div>
                         </div>
                     </div>
-                </template>
-                <template v-else-if="AdminPage == 2">
+        </template>
+        <template v-else-if="AdminPage == 2">
                     <div class="con-admin">
                         <div class="box-admin">
                             <div class="table">
@@ -241,8 +241,8 @@
                             <div class="add"><a href="{:url("admin/index/addUser")}">Add</a></div>
                         </div>
                     </div>
-                </template>
-                <template v-else-if="AdminPage == 3">
+        </template>
+        <template v-else-if="AdminPage == 3">
                     <div class="con-login">
                         <div class="box-login">
                             <template v-if="!artDetail">
@@ -284,15 +284,15 @@
                                         <label>Content</label>
                                         <textarea class="content">{{artDetail.content}}</textarea>
                                     </div>
-                                    <input type="hidden" name="id" class="id" value="{{artDetail.id}}">
+                                    <input type="hidden" name="id" class="id" :value="artDetail.id">
                                     <button class="login-sub">Save</button>
                                     <router-link @click="goAdmin">Back</router-link>
                                 </form>
                             </template>
                         </div>
                     </div>
-                </template>
-                <template v-else>
+        </template>
+        <template v-else>
                     <div class="con-login">
                         <div class="box-login">
                             <template v-if="!userDetail">
@@ -315,20 +315,20 @@
                                 <form class="login-form" action="" method="post">
                                     <div class="user">
                                         <label>User Name</label>
-                                        <input type="text" name="user" class="userInfo" value="{{userDetail.name}}">
+                                        <input type="text" name="user" class="userInfo" :value="userDetail.name">
                                     </div>
                                     <div class="pass">
                                         <label>Password</label>
-                                        <input type="text" name="pass" class="passInfo" value="{{userDetail.pass}}">
+                                        <input type="text" name="pass" class="passInfo" :value="userDetail.pass">
                                     </div>
-                                    <input type="hidden" name="id" class="id" value="{{userDetail.id}}">
+                                    <input type="hidden" name="id" class="id" :value="userDetail.id">
                                     <button class="login-sub">Save</button>
                                     <router-link @click="this.AdminPage = '2'">Back</router-link>
                                 </form>
                             </template>
                         </div>
                     </div>
-                </template>
+        </template>
     </div>
 </div>
 <input type="hidden" name="" value="__ROOT__" id="rootPath">
